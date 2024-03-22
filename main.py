@@ -20,6 +20,7 @@ def video_stream(tello):
 
 def fly(tello):
     tello.takeoff()
+    tello.move_up(60)
     tello.move_forward(300)
     tello.rotate_clockwise(90)
     tello.move_forward(150)
