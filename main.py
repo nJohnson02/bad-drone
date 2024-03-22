@@ -16,7 +16,10 @@ def video_stream(tello):
             tello.streamoff()
             break
 
-    out.release()
+    try:
+        out.release()
+    except:
+        print("Video file corrupted :c")
 
 def fly(tello):
     tello.takeoff()
@@ -34,12 +37,18 @@ def fly(tello):
 if __name__ == '__main__':
     
     tello = Tello()
-    tello.connect()
+    try:
+        tello.connect()
+    except:
+        print("Drone failed to connect.  Did it fall asleep again?")
     print(tello.get_battery())
 
     tello.streamoff()
     tello.streamon()
-    Process(target=video_stream, args=(tello,)).start()
+    try:
+        Process(target=video_stream, args=(tello,)).start()
+    except:
+        print("Video stream error.")
     
     time.sleep(10)
     fly(tello)
